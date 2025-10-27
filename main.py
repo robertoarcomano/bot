@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response, Header
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 from telegram.ext import MessageHandler, filters
@@ -24,6 +24,24 @@ async def lifespan(app: FastAPI):
         await bot_app.stop()
 
 app = FastAPI(lifespan=lifespan)
+
+@app.post("/trigger-pull")
+async def trigger_pull(request: Request, authorization: str = Header(None)):
+    # Sicurezza: controlla un token segreto
+    if authorization != f"Bearer {os.getenv('REPOSITORY_SECRET')}":
+        return Response(status_code=HTTPStatus.UNAUTHORIZED)
+    repo_path = "/home/berto/bot"
+    try:
+        process = await asyncio.create_subprocess_exec(
+            "git", "pull",
+            cwd=repo_path,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        stdout, stderr = await process.communicate()
+    except Exception:
+        return Response(status_code=HTTPStatus.UNAUTHORIZED)
+    return {"status": "pull eseguito"}
 
 @app.post("/webhook")
 async def process_update(request: Request):
