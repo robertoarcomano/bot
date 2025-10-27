@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Call pull via url
         env:
-          GITHUB_SECRET: ${{ secrets.REPOSITORY_SECRET }}
+          REPOSITORY_SECRET: ${{ secrets.REPOSITORY_SECRET }}
         run: |
           curl -X POST https://api.robertoarcomano.com:8443/trigger-pull \
             -H "Authorization: Bearer $REPOSITORY_SECRET"
