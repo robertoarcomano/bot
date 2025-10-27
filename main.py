@@ -70,7 +70,7 @@ async def test1(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_text_as_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.text == "/pull":
         await pull(update, context)
-    await update.message.reply_text("Pull automatica chiamata2")
+    await update.message.reply_text("Pull automatica chiamata3")
 
 bot_app.add_handler(CommandHandler("start", start))
 bot_app.add_handler(CommandHandler("go1", go1))
