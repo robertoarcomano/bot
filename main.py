@@ -41,7 +41,7 @@ async def trigger_pull(request: Request, authorization: str = Header(None)):
         stdout, stderr = await process.communicate()
     except Exception:
         return Response(status_code=HTTPStatus.UNAUTHORIZED)
-    return {"status": "pull eseguito"}
+    return {"status": "pull eseguito", "message": stdout.decode()}
 
 @app.post("/webhook")
 async def process_update(request: Request):
