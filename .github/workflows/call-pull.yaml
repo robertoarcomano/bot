@@ -1,4 +1,4 @@
-name: Call Telegram Bot Pull Command
+name: Call pull via url
 
 on:
   push:
@@ -9,10 +9,10 @@ jobs:
   call-pull:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Telegram Bot API to send /pull command
+      - name: Call pull via url
         env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_SECRET: ${{ secrets.REPOSITORY_SECRET }}
         run: |
-          curl -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" \
-          -d chat_id=$CHAT_ID -d text="/pull"
+          curl -X POST https://api.robertoarcomano.com:8443/trigger-pull \
+            -H "Authorization: Bearer $REPOSITORY_SECRET"
+
