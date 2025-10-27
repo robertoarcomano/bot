@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request, Response
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
+from telegram.ext import MessageHandler, filters
 from http import HTTPStatus
 from contextlib import asynccontextmanager
 import os
@@ -63,8 +64,13 @@ async def get_chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("test")
 
+async def handle_text_as_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.text == "/pull":
+        await pull(update, context)
+
 bot_app.add_handler(CommandHandler("start", start))
 bot_app.add_handler(CommandHandler("go1", go1))
 bot_app.add_handler(CommandHandler("pull", pull))
 bot_app.add_handler(CommandHandler("getchatid", get_chat_id))
 bot_app.add_handler(CommandHandler("test", test))
+bot_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text_as_command))
