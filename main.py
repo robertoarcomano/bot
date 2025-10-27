@@ -82,17 +82,12 @@ async def get_chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("test")
 
-async def test1(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("test1")
-
-async def handle_text_as_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.message.text == "/pull":
-        await pull(update, context)
-    await update.message.reply_text("Pull automatica chiamata3")
+async def test2(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("test2")
 
 bot_app.add_handler(CommandHandler("start", start))
 bot_app.add_handler(CommandHandler("go1", go1))
 bot_app.add_handler(CommandHandler("pull", pull))
 bot_app.add_handler(CommandHandler("getchatid", get_chat_id))
 bot_app.add_handler(CommandHandler("test", test))
-bot_app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_text_as_command))
+bot_app.add_handler(CommandHandler("test2", test2))
