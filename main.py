@@ -4,6 +4,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 from http import HTTPStatus
 from contextlib import asynccontextmanager
 import os
+import asyncio
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 WEBHOOK_URL = "https://api.robertoarcomano.com:8443/webhook"  # URL esposto pubblicamente
