@@ -60,8 +60,11 @@ async def get_chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f"Chat ID: {chat_id}")
     await update.message.reply_text(f"Il tuo chat_id è {chat_id}")
 
+async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("test")
 
 bot_app.add_handler(CommandHandler("start", start))
 bot_app.add_handler(CommandHandler("go1", go1))
 bot_app.add_handler(CommandHandler("pull", pull))
 bot_app.add_handler(CommandHandler("getchatid", get_chat_id))
+bot_app.add_handler(CommandHandler("test", test))
