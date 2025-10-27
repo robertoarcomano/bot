@@ -82,12 +82,12 @@ async def get_chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("test")
 
-async def test4(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("test4")
+async def test5(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("test5")
 
 bot_app.add_handler(CommandHandler("start", start))
 bot_app.add_handler(CommandHandler("go1", go1))
 bot_app.add_handler(CommandHandler("pull", pull))
 bot_app.add_handler(CommandHandler("getchatid", get_chat_id))
 bot_app.add_handler(CommandHandler("test", test))
-bot_app.add_handler(CommandHandler("test4", test4))
+bot_app.add_handler(CommandHandler("test5", test5))
