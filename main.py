@@ -3,10 +3,10 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 from http import HTTPStatus
 from contextlib import asynccontextmanager
+import os
 
-TOKEN = "8320626110:AAHNT5MxFx3H_t8-YXe6KaTMXQ2klP_9l2s"
-WEBHOOK_URL = "https://api.robertoarcomano.com/webhook"  # URL esposto pubblicamente
-
+TOKEN = os.getenv("TELEGRAM_TOKEN")
+WEBHOOK_URL = "https://api.robertoarcomano.com:8443/webhook"  # URL esposto pubblicamente
 bot_app = (
     Application.builder()
     .token(TOKEN)
@@ -33,4 +33,34 @@ async def process_update(request: Request):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Ciao! Sono un bot FastAPI minimal.")
 
+async def go1(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("go1!")
+
+async def pull(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    repo_path = "/home/berto/bot"
+    try:
+        process = await asyncio.create_subprocess_exec(
+            "git", "pull",
+            cwd=repo_path,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        stdout, stderr = await process.communicate()
+
+        if process.returncode != 0:
+          await update.message.reply_text(f"not pulled: {stderr.decode()}")
+        else:
+          await update.message.reply_text(f"pulled: {stdout.decode()}")
+    except Exception as e:
+        await update.message.reply_text(f"not pulled: {str(e)}")
+
+async def get_chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    chat_id = update.message.chat_id
+    print(f"Chat ID: {chat_id}")
+    await update.message.reply_text(f"Il tuo chat_id è {chat_id}")
+
+
 bot_app.add_handler(CommandHandler("start", start))
+bot_app.add_handler(CommandHandler("go1", go1))
+bot_app.add_handler(CommandHandler("pull", pull))
+bot_app.add_handler(CommandHandler("getchatid", get_chat_id))
