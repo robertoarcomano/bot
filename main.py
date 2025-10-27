@@ -64,6 +64,9 @@ async def get_chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("test")
 
+async def test1(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("test1")
+
 async def handle_text_as_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.text == "/pull":
         await pull(update, context)
