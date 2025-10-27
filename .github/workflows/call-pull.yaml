@@ -3,7 +3,7 @@ name: Call Telegram Bot Pull Command
 on:
   push:
     branches:
-      - master  # o il branch che vuoi monitorare
+      - master
 
 jobs:
   call-pull:
